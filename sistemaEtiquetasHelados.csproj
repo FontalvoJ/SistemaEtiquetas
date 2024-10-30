@@ -77,6 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helados.Designer.cs">
+      <DependentUpon>Helados.cs</DependentUpon>
+    </Compile>
     <Compile Include="Imprimir.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,18 @@
     <Compile Include="Models\SaboresM.cs" />
     <Compile Include="Models\SellosM.cs" />
     <Compile Include="Models\ValoresNutricionalesM.cs" />
+    <Compile Include="NuevoNutriente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevoNutriente.Designer.cs">
+      <DependentUpon>NuevoNutriente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NuevoSabor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuevoSabor.Designer.cs">
+      <DependentUpon>NuevoSabor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,8 +129,17 @@
     <Compile Include="Servicios\IHelados.cs" />
     <Compile Include="Servicios\IProductores.cs" />
     <Compile Include="Servicios\Productores_API.cs" />
+    <EmbeddedResource Include="Helados.resx">
+      <DependentUpon>Helados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Imprimir.resx">
       <DependentUpon>Imprimir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevoNutriente.resx">
+      <DependentUpon>NuevoNutriente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuevoSabor.resx">
+      <DependentUpon>NuevoSabor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panel.resx">
       <DependentUpon>Panel.cs</DependentUpon>

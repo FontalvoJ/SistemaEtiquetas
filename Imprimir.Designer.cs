@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Imprimir));
             this.btnImprimir = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,16 +39,17 @@
             this.cbxEnvaseEti = new System.Windows.Forms.ComboBox();
             this.txtPesoEti = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnRegresar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnImprimir
             // 
             this.btnImprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(53)))), ((int)(((byte)(77)))));
-            this.btnImprimir.Font = new System.Drawing.Font("Century Gothic", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnImprimir.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.btnImprimir.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnImprimir.Location = new System.Drawing.Point(295, 464);
+            this.btnImprimir.Location = new System.Drawing.Point(328, 452);
             this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(235, 85);
+            this.btnImprimir.Size = new System.Drawing.Size(187, 61);
             this.btnImprimir.TabIndex = 0;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = false;
@@ -97,7 +99,7 @@
             // 
             this.cbxProductorEti.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxProductorEti.FormattingEnabled = true;
-            this.cbxProductorEti.Location = new System.Drawing.Point(245, 144);
+            this.cbxProductorEti.Location = new System.Drawing.Point(245, 143);
             this.cbxProductorEti.Name = "cbxProductorEti";
             this.cbxProductorEti.Size = new System.Drawing.Size(339, 29);
             this.cbxProductorEti.TabIndex = 5;
@@ -130,6 +132,7 @@
             this.txtPesoEti.Name = "txtPesoEti";
             this.txtPesoEti.Size = new System.Drawing.Size(339, 30);
             this.txtPesoEti.TabIndex = 8;
+            this.txtPesoEti.TextChanged += new System.EventHandler(this.txtPesoEti_TextChanged);
             // 
             // label5
             // 
@@ -142,11 +145,25 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Imprimir Etiqueta";
             // 
+            // btnRegresar
+            // 
+            this.btnRegresar.BackColor = System.Drawing.Color.Maroon;
+            this.btnRegresar.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegresar.ForeColor = System.Drawing.Color.Snow;
+            this.btnRegresar.Location = new System.Drawing.Point(328, 519);
+            this.btnRegresar.Name = "btnRegresar";
+            this.btnRegresar.Size = new System.Drawing.Size(187, 65);
+            this.btnRegresar.TabIndex = 13;
+            this.btnRegresar.Text = "Regresar";
+            this.btnRegresar.UseVisualStyleBackColor = false;
+            this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
+            // 
             // Imprimir
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 596);
+            this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtPesoEti);
             this.Controls.Add(this.cbxEnvaseEti);
@@ -157,6 +174,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnImprimir);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Imprimir";
             this.Text = "Imprimir";
             this.ResumeLayout(false);
@@ -176,5 +194,6 @@
         private System.Windows.Forms.ComboBox cbxEnvaseEti;
         private System.Windows.Forms.TextBox txtPesoEti;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnRegresar;
     }
 }

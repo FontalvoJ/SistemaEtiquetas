@@ -92,6 +92,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnImprimirEtiqueta);
             this.Controls.Add(this.btnAñadir);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Panel";
             this.Text = "Panel";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

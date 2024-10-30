@@ -26,7 +26,7 @@ namespace sistemaEtiquetasHelados
         {
             InitializeComponent();
 
-            this.Text = "Impresión de Etiqueta";
+            this.Text = "";
             this.MaximizeBox = false;
             this.MinimizeBox = true;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -36,6 +36,7 @@ namespace sistemaEtiquetasHelados
             heladosApi = new Helados_API();
             envasesApi = new Envases_API();
 
+            btnImprimir.Enabled = false;
             CargarProductores();
         }
 
@@ -58,16 +59,20 @@ namespace sistemaEtiquetasHelados
         
         private async void cbxProductorEti_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            cbxHeladoEti.DataSource = null;
+            cbxEnvaseEti.DataSource = null;
+
             if (cbxProductorEti.SelectedItem is ProductoresM productorSeleccionado)
             {
                 int productorId = productorSeleccionado.id;
                 await CargarHeladosPorProductor(productorId);
+
+                cbxHeladoEti.Enabled = true;
+
             }
-            else
-            {
-                cbxHeladoEti.DataSource = null;
-                cbxEnvaseEti.DataSource = null;
-            }
+
+            ActualizarEstadoBotonImprimir();
         }
 
         // -------------------------- HELADOS  --------------------------
@@ -87,6 +92,8 @@ namespace sistemaEtiquetasHelados
                     cbxHeladoEti.DataSource = helados;
                     cbxHeladoEti.DisplayMember = "nombre";
                     cbxHeladoEti.ValueMember = "id";
+
+                    cbxHeladoEti.SelectedIndex = -1;
                 }
             }
             catch (Exception ex)
@@ -96,6 +103,11 @@ namespace sistemaEtiquetasHelados
         }
         private async void cbxHeladoEti_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cbxEnvaseEti.DataSource = null;
+            cbxEnvaseEti.Items.Clear();
+
+            cbxEnvaseEti.SelectedIndex = -1;
+
             if (cbxHeladoEti.SelectedItem is HeladosM heladoSeleccionado)
             {
                 int heladoId = heladoSeleccionado.id;
@@ -103,9 +115,11 @@ namespace sistemaEtiquetasHelados
             }
             else
             {
-                cbxEnvaseEti.Items.Clear(); 
-                
+                cbxEnvaseEti.Items.Clear();
+
             }
+
+            ActualizarEstadoBotonImprimir();
         }
 
         // -------------------------- ENVASE  --------------------------
@@ -115,14 +129,15 @@ namespace sistemaEtiquetasHelados
             {
                 List<EnvasesM> envases = await envasesApi.ObtenerEnvasesPorHelado(heladoId.ToString());
 
-                cbxEnvaseEti.Items.Clear(); 
+                cbxEnvaseEti.DataSource = null;  
+                cbxEnvaseEti.Items.Clear();      
+                cbxEnvaseEti.SelectedIndex = -1;
 
                 if (envases != null && envases.Count > 0)
                 {
-                    foreach (var envase in envases)
-                    {
-                        cbxEnvaseEti.Items.Add(envase); 
-                    }
+                    cbxEnvaseEti.DataSource = envases;
+                    cbxEnvaseEti.DisplayMember = "nombre"; 
+                    cbxEnvaseEti.ValueMember = "id"; 
                 }
                 else
                 {
@@ -142,6 +157,8 @@ namespace sistemaEtiquetasHelados
                 double volumen = envaseSeleccionado.CalcularVolumen(); 
               
             }
+
+            ActualizarEstadoBotonImprimir();
 
         }
 
@@ -211,6 +228,32 @@ namespace sistemaEtiquetasHelados
             {
                 MessageBox.Show("Error al imprimir la etiqueta: " + ex.Message);
             }
+        }
+
+
+        private void ActualizarEstadoBotonImprimir()
+        {
+            
+            bool camposCompletos = cbxProductorEti.SelectedItem != null &&
+                                    cbxHeladoEti.SelectedIndex != -1 &&
+                                   cbxEnvaseEti.SelectedItem != null &&
+                                   int.TryParse(txtPesoEti.Text, out _); 
+
+            btnImprimir.Enabled = camposCompletos;
+        }
+
+        private void txtPesoEti_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarEstadoBotonImprimir();
+        }
+
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            Panel formularioInicio = new Panel();
+
+            formularioInicio.Show();
+
+            this.Hide();
         }
     }
 }
