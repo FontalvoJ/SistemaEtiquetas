@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,7 @@ namespace sistemaEtiquetasHelados
             CargarProductores();
         }
 
+        // -------------------------- PRODUCTOR  --------------------------
         private async void CargarProductores()
         {
             try
@@ -53,6 +55,7 @@ namespace sistemaEtiquetasHelados
             }
         }
 
+        
         private async void cbxProductorEti_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbxProductorEti.SelectedItem is ProductoresM productorSeleccionado)
@@ -67,7 +70,7 @@ namespace sistemaEtiquetasHelados
             }
         }
 
-
+        // -------------------------- HELADOS  --------------------------
         private async Task CargarHeladosPorProductor(int productorId)
         {
             try
@@ -105,7 +108,7 @@ namespace sistemaEtiquetasHelados
             }
         }
 
-
+        // -------------------------- ENVASE  --------------------------
         private async Task CargarEnvasesPorHelado(int heladoId)
         {
             try
@@ -142,16 +145,18 @@ namespace sistemaEtiquetasHelados
 
         }
 
+
+        // -------------------------- IMPRIMIR ETIQUETA  --------------------------
         private async void btnImprimir_Click(object sender, EventArgs e)
         {
-            
+
+           
             if (!int.TryParse(txtPesoEti.Text, out int peso))
             {
                 MessageBox.Show("Por favor, ingrese un peso válido.");
                 return;
             }
 
-            
             if (cbxHeladoEti.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, seleccione un helado.");
@@ -159,9 +164,9 @@ namespace sistemaEtiquetasHelados
             }
 
             var helado = (HeladosM)cbxHeladoEti.SelectedItem; 
-            int heladoId = helado.id; 
+            int heladoId = helado.id;
 
-            
+           
             if (cbxEnvaseEti.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, seleccione un envase.");
@@ -171,7 +176,7 @@ namespace sistemaEtiquetasHelados
             var envase = (EnvasesM)cbxEnvaseEti.SelectedItem; 
             int envaseId = envase.id; 
 
-            
+           
             EtiquetaRequest etiquetaRequest = new EtiquetaRequest
             {
                 fecha = DateTime.Now.ToString("MM/dd/yyyy"), 
@@ -180,14 +185,31 @@ namespace sistemaEtiquetasHelados
 
             try
             {
-                IEtiqueta etiquetaService = new Etiqueta_API(); 
+                IEtiqueta etiquetaService = new Etiqueta_API();
                 string resultado = await etiquetaService.ImprimirEtiquetaAsync(etiquetaRequest, heladoId, envaseId);
 
-                MessageBox.Show("Etiqueta impresa con éxito. \n" + resultado); 
+                
+                var result = MessageBox.Show("Etiqueta impresa con éxito. \n¿Desea abrir el archivo PDF generado?",
+                                             "Impresión Completa",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    
+                    string filePath = resultado.Split(new[] { "en: " }, StringSplitOptions.None).Last();
+
+                    
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = filePath,
+                        UseShellExecute = true
+                    });
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al imprimir la etiqueta: " + ex.Message); 
+                MessageBox.Show("Error al imprimir la etiqueta: " + ex.Message);
             }
         }
     }
