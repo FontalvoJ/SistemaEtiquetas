@@ -19,7 +19,7 @@ namespace sistemaEtiquetasHelados.Servicios
 
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/pdf"); 
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/pdf");
 
                 var jsonContent = JsonConvert.SerializeObject(etiquetaRequest);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -44,14 +44,6 @@ namespace sistemaEtiquetasHelados.Servicios
                     {
                         await fileStream.WriteAsync(pdfData, 0, pdfData.Length);
                     }
-
-
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = folderPath,
-                        UseShellExecute = true,
-                        Verb = "open"
-                    });
 
                     return $"Archivo PDF guardado exitosamente en: {filePath}";
                 }

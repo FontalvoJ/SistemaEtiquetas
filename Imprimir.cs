@@ -167,20 +167,20 @@ namespace sistemaEtiquetasHelados
         private async void btnImprimir_Click(object sender, EventArgs e)
         {
 
-           
+         
             if (!int.TryParse(txtPesoEti.Text, out int peso))
             {
                 MessageBox.Show("Por favor, ingrese un peso válido.");
                 return;
             }
 
+           
             if (cbxHeladoEti.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, seleccione un helado.");
                 return;
             }
-
-            var helado = (HeladosM)cbxHeladoEti.SelectedItem; 
+            var helado = (HeladosM)cbxHeladoEti.SelectedItem;
             int heladoId = helado.id;
 
            
@@ -189,23 +189,23 @@ namespace sistemaEtiquetasHelados
                 MessageBox.Show("Por favor, seleccione un envase.");
                 return;
             }
+            var envase = (EnvasesM)cbxEnvaseEti.SelectedItem;
+            int envaseId = envase.id;
 
-            var envase = (EnvasesM)cbxEnvaseEti.SelectedItem; 
-            int envaseId = envase.id; 
-
-           
+         
             EtiquetaRequest etiquetaRequest = new EtiquetaRequest
             {
-                fecha = DateTime.Now.ToString("MM/dd/yyyy"), 
-                peso = peso 
+                fecha = DateTime.Now.ToString("MM/dd/yyyy"),
+                peso = peso
             };
 
             try
             {
+            
                 IEtiqueta etiquetaService = new Etiqueta_API();
                 string resultado = await etiquetaService.ImprimirEtiquetaAsync(etiquetaRequest, heladoId, envaseId);
 
-                
+              
                 var result = MessageBox.Show("Etiqueta impresa con éxito. \n¿Desea abrir el archivo PDF generado?",
                                              "Impresión Completa",
                                              MessageBoxButtons.YesNo,
@@ -213,10 +213,10 @@ namespace sistemaEtiquetasHelados
 
                 if (result == DialogResult.Yes)
                 {
-                    
+           
                     string filePath = resultado.Split(new[] { "en: " }, StringSplitOptions.None).Last();
 
-                    
+                  
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = filePath,
