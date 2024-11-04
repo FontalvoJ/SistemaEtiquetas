@@ -129,15 +129,15 @@ namespace sistemaEtiquetasHelados
             {
                 List<EnvasesM> envases = await envasesApi.ObtenerEnvasesPorHelado(heladoId.ToString());
 
-                cbxEnvaseEti.DataSource = null;  
-                cbxEnvaseEti.Items.Clear();      
+                cbxEnvaseEti.DataSource = null;
+                cbxEnvaseEti.Items.Clear();
                 cbxEnvaseEti.SelectedIndex = -1;
 
                 if (envases != null && envases.Count > 0)
                 {
                     cbxEnvaseEti.DataSource = envases;
-                    cbxEnvaseEti.DisplayMember = "nombre"; 
-                    cbxEnvaseEti.ValueMember = "id"; 
+                    cbxEnvaseEti.DisplayMember = "nombre"; // Muestra la propiedad nombre, que contiene el volumen
+                    cbxEnvaseEti.ValueMember = "id";
                 }
                 else
                 {
@@ -148,17 +148,16 @@ namespace sistemaEtiquetasHelados
             {
                 MessageBox.Show("Error al cargar los envases: " + ex.Message);
             }
-        
+
         }
         private void cbxEnvaseEti_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbxEnvaseEti.SelectedItem is EnvasesM envaseSeleccionado)
             {
-                double volumen = envaseSeleccionado.CalcularVolumen(); 
               
-            }
+                string volumenEnNombre = envaseSeleccionado.nombre;
 
-            ActualizarEstadoBotonImprimir();
+            }
 
         }
 

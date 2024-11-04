@@ -19,6 +19,9 @@ namespace sistemaEtiquetasHelados.Models
         public string figura { get; set; }
         public float etiquetaAlto { get; set; }
         public float etiquetaAncho { get; set; }
+
+        public string nombre { get; set; }
+
         public int CalcularVolumen()
         {
             double radio = Base / 2;
